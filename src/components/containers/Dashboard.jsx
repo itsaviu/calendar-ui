@@ -67,8 +67,8 @@ const Dashboard = () => {
         })
     }
     const dateUpdate = (value, dateString) => {
-        console.log('Selected Time: ', value[0].toISOString());
-        console.log('Selected Time: ', value[1].toISOString());
+        console.log('Selected Time: ', value[0].utcOffset("+05:30").format());
+        console.log('Selected Time: ', value[1].utcOffset("+05:30").format());
         setEventRecord({
             ...eventRecord,
             startTime: value[0].toISOString(),
