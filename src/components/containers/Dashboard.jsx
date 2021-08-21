@@ -33,7 +33,7 @@ const Dashboard = () => {
     }, [type])
 
     const fetchEvents = (param) => {
-        axios.get('http://100.25.202.23:5000/api/events/'+param)
+        axios.get('https://app-calendar-95.herokuapp.com/api/events/'+param)
             .then((resp) => {
                 setEvents(resp.data)
             })
@@ -41,7 +41,7 @@ const Dashboard = () => {
     }
 
     const postEvent = () => {
-        axios.post("http://100.25.202.23:5000/api/events", eventRecord)
+        axios.post("https://app-calendar-95.herokuapp.com/api/events", eventRecord)
             .then(resp => {
                 fetchEvents(type)
                 setEventRecord({})
