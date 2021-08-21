@@ -33,7 +33,7 @@ const Dashboard = () => {
     }, [type])
 
     const fetchEvents = (param) => {
-        axios.get('http://localhost:5000/api/events/'+param)
+        axios.get('http://100.25.202.23:5000/api/events/'+param)
             .then((resp) => {
                 setEvents(resp.data)
             })
@@ -41,7 +41,7 @@ const Dashboard = () => {
     }
 
     const postEvent = () => {
-        axios.post("http://localhost:5000/api/events", eventRecord)
+        axios.post("http://100.25.202.23:5000/api/events", eventRecord)
             .then(resp => {
                 fetchEvents(type)
                 setEventRecord({})
