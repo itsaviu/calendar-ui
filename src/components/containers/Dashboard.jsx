@@ -6,11 +6,12 @@ import moment from 'moment'
 
 
 const Dashboard = () => {
-
-    const [eventRecord, setEventRecord] = useState({
+    const defaulValue = {
         startTime: moment().utc().format(),
         endTime: moment().utc().format()
-    })
+    }
+
+    const [eventRecord, setEventRecord] = useState(defaulValue)
     const [events, setEvents] = useState([])
     const [type, setType] = useState('today')
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -49,7 +50,7 @@ const Dashboard = () => {
         // axios.post("http://localhost:5000//api/events", eventRecord)
             .then(resp => {
                 fetchEvents(type)
-                setEventRecord({})
+                setEventRecord(defaulValue)
             })
             .catch(err => console.log(err))
     }
