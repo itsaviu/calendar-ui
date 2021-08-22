@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Button, Radio, Modal, DatePicker, Space, Input } from 'antd';
 import axios from 'axios';
 import EventListers from '../presentations/EventListers';
-
+import moment from 'moment'
 
 
 const Dashboard = () => {
 
-    const [eventRecord, setEventRecord] = useState({})
+    const [eventRecord, setEventRecord] = useState({
+        startTime: moment().utc().format(),
+        endTime: moment().utc().format()
+    })
     const [events, setEvents] = useState([])
     const [type, setType] = useState('today')
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,6 +37,7 @@ const Dashboard = () => {
 
     const fetchEvents = (param) => {
         axios.get('https://app-calendar-95.herokuapp.com/api/events/'+param)
+        // axios.get('http://localhost:5000/api/events/'+param)
             .then((resp) => {
                 setEvents(resp.data)
             })
@@ -42,6 +46,7 @@ const Dashboard = () => {
 
     const postEvent = () => {
         axios.post("https://app-calendar-95.herokuapp.com/api/events", eventRecord)
+        // axios.post("http://localhost:5000//api/events", eventRecord)
             .then(resp => {
                 fetchEvents(type)
                 setEventRecord({})
@@ -96,15 +101,15 @@ const Dashboard = () => {
             </div>
             <Modal title="Create Event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <div className="mt-2 mb-2">
-                    <Input placeholder="Event Name" onChange={addEventName} style={{ width: 200 }} />  
+                    <Input placeholder="Event Name" value={eventRecord.eventName} onChange={addEventName} style={{ width: 200 }} />  
                 </div>
                 <div className="mt-2 mb-2">
                     <Space direction="vertical" size={12}>
-                        <RangePicker showTime onChange={dateUpdate} />
+                        <RangePicker defaultValue={[moment(eventRecord.startTime), moment(eventRecord.endTime)]} showTime onChange={dateUpdate} />
                     </Space>  
                 </div>
                 <div className="mt-2 mb-2">
-                    <Radio.Group onChange={updateFrequency} defaultValue="today">
+                    <Radio.Group onChange={updateFrequency} defaultValue={eventRecord.frequency}>
                                 <Radio.Button value="NONE">None</Radio.Button>
                                 <Radio.Button value="DAILY">Daily</Radio.Button>
                                 <Radio.Button value="WEEKLY">Weekly</Radio.Button>
